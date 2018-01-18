@@ -1,0 +1,25 @@
+title 0.3
+
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa osoiteriville 
+ https://fullstack-exampleapp.herokuapp.com/notes
+ end note:
+ selain->palvelin:
+ note left of palvelin
+ https GET fullstack-exampleapp.herokuapp.com/notes
+ end note:
+ palvelin->selain: status 200, sivun HTML-koodi
+ selain->palvelin:  https GET fullstack-exampleapp.herokuapp.com/main.css
+ selain->palvelin:  https GET fullstack-exampleapp.herokuapp.com/main.js
+ palvelin->selain: status 200, tyylisivu
+ palvelin->selain: status 200, skriptitiedosto
+ selain->palvelin: https GET fullstack-exampleapp.herokuapp.com/favicon.ico
+ palvelin->selain: status 404, favicon
+ selain->palvelin: https GET fullstack-exampleapp.herokuapp.com/data.json
+ palvelin->selain: status 200, json
+ note left of selain
+ selain suorittaa skriptin, sitten 
+ näyttää palvelimen palauttaman HTML:n
+ tyylisivulla muotoiltuna
+end note
