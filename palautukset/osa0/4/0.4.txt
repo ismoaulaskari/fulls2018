@@ -1,0 +1,30 @@
+title 0.4
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa tekstikenttaan 
+soittakaa paranoid ja 
+painaa tallenna
+end note 
+selain->palvelin: https POST https://fullstack-exampleapp.herokuapp.com/new_note
+note left of palvelin
+lomakedataa välitetetään
+note: soittakaa paranoid
+end note
+palvelin->selain: status 302, location /notes
+selain->palvelin: HTTPS GET https://fullstack-exampleapp.herokuapp.com/notes
+note left of palvelin
+vaikuttaa siltä että Chromium tekee getin vastauksen 
+location-kenttään saadessaan 302-statuksen postauksestaan
+end note
+palvelin->selain: status 200, notes-html-sivun koodi
+ selain->palvelin:  https GET fullstack-exampleapp.herokuapp.com/main.css
+ selain->palvelin:  https GET fullstack-exampleapp.herokuapp.com/main.js
+ palvelin->selain: status 200, tyylisivu
+ palvelin->selain: status 200, skriptitiedosto
+ selain->palvelin: https GET fullstack-exampleapp.herokuapp.com/data.json
+ palvelin->selain: status 200, json
+ note left of selain
+ selain suorittaa skriptin, sitten 
+ näyttää palvelimen palauttaman HTML:n
+ tyylisivulla muotoiltuna
+end note
