@@ -14,7 +14,8 @@ palvelin->selain: status 302, location /notes
 selain->palvelin: HTTPS GET https://fullstack-exampleapp.herokuapp.com/notes
 note left of palvelin
 vaikuttaa siltä että Chromium tekee getin vastauksen 
-location-kenttään saadessaan 302-statuksen postauksestaan
+location-kenttään saadessaan 302-statuksen postauksestaan,
+eli tekee post-redirect-getin
 end note
 palvelin->selain: status 200, notes-html-sivun koodi
  selain->palvelin:  https GET fullstack-exampleapp.herokuapp.com/main.css
