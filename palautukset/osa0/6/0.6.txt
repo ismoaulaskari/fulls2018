@@ -1,0 +1,20 @@
+title 0.6
+
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa tekstikenttään
+ toimiiko internets
+ ja painaa Talleta
+ end note:
+ selain->palvelin:
+ note left of palvelin
+ https post fullstack-exampleapp.herokuapp.com/new_note_spa
+"toimiiko internets" talletetaan kantaan
+ end note:
+ palvelin->selain: status 201 (created), vastaus-json "note created"
+ selain->palvelin: https GET fullstack-exampleapp.herokuapp.com/favicon.ico
+ palvelin->selain: status 404, favicon
+note left of selain
+ selain suorittaa skriptin, 
+ skripti ohjaa sivun piirtämistä
+end note
