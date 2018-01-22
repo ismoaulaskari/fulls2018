@@ -20,6 +20,7 @@ note left of selain
  selain suorittaa skriptin, 
  skripti hakee data.json, sitten 
  näyttää palvelimen palauttaman HTML:n
+skriptillä muokattuna
  tyylisivulla muotoiltuna
 end note
 selain->palvelin: https GET fullstack-exampleapp.herokuapp.com/data.json
