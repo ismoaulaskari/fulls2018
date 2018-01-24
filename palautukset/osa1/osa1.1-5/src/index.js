@@ -19,9 +19,7 @@ const Osa = (props) => {
 const Sisalto = (props) => {
     return (
         <div>
-            <Osa osa={props.data[1].teksti} tehtavia={props.data[1].num} />
-            <Osa osa={props.data[2].teksti} tehtavia={props.data[2].num} />
-            <Osa osa={props.data[3].teksti} tehtavia={props.data[3].num} />
+            {props.data.map(r => <Osa osa={r.nimi} tehtavia={r.tehtavia} />)}
         </div>
     )
 }
@@ -36,25 +34,24 @@ const Yhteensa = (props) => {
 
 const App = () => {
     const kurssi = 'Half Stack -sovelluskehitys'
-    const data = {}
-    data[1] = {
-        'teksti': 'Reactin perusteet',
-        'num': 10
+    const osa1 = {
+        nimi: 'Reactin perusteet',
+        tehtavia: 10
     }
-    data[2] = {
-        'teksti': 'Tiedonvälitys propseilla',
-        'num': 7
+    const osa2 = {
+        nimi: 'Tiedonvälitys propseilla',
+        tehtavia: 7
     }
-    data[3] = {
-        'teksti': 'Komponenttien tila',
-        'num': 14
+    const osa3 = {
+        nimi: 'Komponenttien tila',
+        tehtavia: 14
     }
 
     return (
         <div>
             <Otsikko kurssi={kurssi} />
-            <Sisalto data={data} />
-            <Yhteensa count={data[1].num + data[2].num + data[3].num} />
+            <Sisalto data={[osa1, osa2, osa3]} />
+            <Yhteensa count={osa1.tehtavia + osa2.tehtavia + osa3.tehtavia} />
         </div>
     )
 }
