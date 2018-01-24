@@ -25,33 +25,39 @@ const Sisalto = (props) => {
 }
 
 const Yhteensa = (props) => {
+    let sum = 0
+    sum += props.counts[0].tehtavia
+    sum += props.counts[1].tehtavia
+    sum += props.counts[2].tehtavia
     return (
         <div>
-            <p>yhteensä {props.count} tehtävää</p>
+            <p>yhteensä {sum} tehtävää</p>
         </div>
     )
 }
 
 const App = () => {
     const kurssi = 'Half Stack -sovelluskehitys'
-    const osa1 = {
-        nimi: 'Reactin perusteet',
-        tehtavia: 10
-    }
-    const osa2 = {
-        nimi: 'Tiedonvälitys propseilla',
-        tehtavia: 7
-    }
-    const osa3 = {
-        nimi: 'Komponenttien tila',
-        tehtavia: 14
-    }
+    const osat = [
+        {
+            nimi: 'Reactin perusteet',
+            tehtavia: 10
+        },
+        {
+            nimi: 'Tiedonvälitys propseilla',
+            tehtavia: 7
+        },
+        {
+            nimi: 'Komponenttien tila',
+            tehtavia: 14
+        }
+    ]
 
     return (
         <div>
             <Otsikko kurssi={kurssi} />
-            <Sisalto data={[osa1, osa2, osa3]} />
-            <Yhteensa count={osa1.tehtavia + osa2.tehtavia + osa3.tehtavia} />
+            <Sisalto data={osat} />
+            <Yhteensa counts={osat} />
         </div>
     )
 }
