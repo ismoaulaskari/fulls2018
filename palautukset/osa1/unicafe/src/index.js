@@ -42,7 +42,7 @@ class App extends React.Component {
 
 const Statistic = ({ text, value }) => {
     return (
-        <p>{text} {value}</p>
+        <tr><td>{text}</td><td>{value}</td></tr>
     )
 }
 
@@ -53,35 +53,38 @@ const Statistics = ({ getState }) => {
     }
     const positiivisia = () => {
         let aania = getState.summa
-        return (getState.hyva / aania) * 100
+        return (getState.hyva / aania) * 100 + "%"
     }
+
     if (getState.summa === 0)
         return (
             <div>
                 <h3>{tulos}</h3>
-                <Statistic text="huono" value={getState.huono} />
-                <Statistic text="neutraali" value={getState.neutraali} />
-                <Statistic text="hyva" value={getState.hyva} />
+                <table>
+                    <tbody>
+                        <Statistic text="huono" value={getState.huono} />
+                        <Statistic text="neutraali" value={getState.neutraali} />
+                        <Statistic text="hyva" value={getState.hyva} />
+                    </tbody>
+                </table>
                 <h3>{stats}</h3>
-                <div>
-                    <p>ei yhtään palautetta annettu</p>
-                </div>
+                <p>ei yhtään palautetta annettu</p>
             </div>
         )
     else
         return (
             <div>
                 <h3>{tulos}</h3>
-                <Statistic text="huono" value={getState.huono} />
-                <Statistic text="neutraali" value={getState.neutraali} />
-                <Statistic text="hyva" value={getState.hyva} />
-                <h3>{stats}</h3>
-                <div>
-                    <Statistic text="Keskiarvo" value={keskiarvo()} />
-                </div>
-                <div>
-                    <Statistic text="Positiivisia" value={positiivisia()} />%
-                </div>
+                <table>
+                    <tbody>
+                        <Statistic text="huono" value={getState.huono} />
+                        <Statistic text="neutraali" value={getState.neutraali} />
+                        <Statistic text="hyva" value={getState.hyva} />
+                        <tr><td><h3>{stats}</h3></td></tr>
+                        <Statistic text="Keskiarvo" value={keskiarvo()} />
+                        <Statistic text="Positiivisia" value={positiivisia()} />
+                    </tbody>
+                </table>
             </div>
         )
 }
