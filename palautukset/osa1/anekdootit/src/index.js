@@ -5,7 +5,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: 3
+      selected: 0,
+      votes: {}
     }
   }
 
@@ -17,13 +18,27 @@ class App extends React.Component {
     }
   }
 
-  render() {    
+  vote = (l) => {
+    const kopio = {...this.state.votes}
+    if (kopio[l] === undefined) {
+      kopio[l] = 0
+    }
+    kopio[l] += 1
+    return () => {
+      this.setState({
+        votes: kopio
+      })
+    }
+  }
+
+  render() {
     return (
       <div>
         <button onClick={this.shuffle(this.props.anecdotes.length)}>sekoita</button>
         <div>
           {this.props.anecdotes[this.state.selected]}
         </div>
+        <button onClick={this.vote(this.state.selected)}>äänestä tätä</button>
       </div>
     )
   }
