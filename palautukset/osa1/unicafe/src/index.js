@@ -16,27 +16,6 @@ class App extends React.Component {
         }
     }
 
-    klikHyva = () => {
-        this.setState({
-            hyva: this.state.hyva + 1,
-            summa: this.state.summa + 1
-        })
-    }
-
-    klikNeutraali = () => {
-        this.setState({
-            neutraali: this.state.neutraali + 1,
-            summa: this.state.summa + 1
-        })
-    }
-
-    klikHuono = () => {
-        this.setState({
-            huono: this.state.huono + 1,
-            summa: this.state.summa + 1
-        })
-    }
-
     klik = (kohde) => {
         return () => {
             this.setState({
@@ -69,13 +48,11 @@ const Statistic = ({ text, value }) => {
 
 const Statistics = ({ getState }) => {
     const keskiarvo = () => {
-        //let aania = getState.huono + getState.neutraali + getState.hyva
         let aania = getState.summa
         return (getState.huono * -1 + getState.neutraali * 0 + getState.hyva * 1) / aania
     }
     const positiivisia = () => {
         let aania = getState.summa
-        //let aania = getState.huono + getState.neutraali + getState.hyva
         return (getState.hyva / aania) * 100
     }
     if (getState.summa === 0)
