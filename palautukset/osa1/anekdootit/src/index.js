@@ -31,6 +31,19 @@ class App extends React.Component {
     }
   }
 
+  paras = () => {
+    const kopio = {...this.state.votes}
+    let num  = 0;
+    let maxAanet = 0;
+    let teksti = '';
+    Object.keys(kopio).foreach(key => {
+      if(kopio[key] > maxAanet) {
+        maxAanet = kopio[key]        
+        teksti = anecdotes[key]
+      }
+    });
+  }
+
   render() {
     return (
       <div>
