@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 const intro = "Arvostele Unicafe"
-const tulos = "Tulokset:"
+const tulos = "Tulokset"
+const stats = "Statistiikka"
 
 class App extends React.Component {
 
@@ -10,25 +11,29 @@ class App extends React.Component {
         this.state = {
             hyva: 0,
             neutraali: 0,
-            huono: 0
+            huono: 0,
+            summa: 0
         }
     }
 
     klikHyva = () => {
         this.setState({
-            hyva: this.state.hyva + 1
+            hyva: this.state.hyva + 1,
+            summa: this.state.summa + 1
         })
     }
 
     klikNeutraali = () => {
         this.setState({
-            neutraali: this.state.neutraali + 1
+            neutraali: this.state.neutraali + 1,
+            summa: this.state.summa + 1
         })
     }
 
     klikHuono = () => {
         this.setState({
-            huono: this.state.huono + 1
+            huono: this.state.huono + 1,
+            summa: this.state.summa + 1
         })
     }
 
@@ -55,27 +60,44 @@ const Statistic = ({ text, value }) => {
 
 const Statistics = ({ getState }) => {
     const keskiarvo = () => {
-        let aania = getState.huono + getState.neutraali + getState.hyva
+        //let aania = getState.huono + getState.neutraali + getState.hyva
+        let aania = getState.summa
         return (getState.huono * -1 + getState.neutraali * 0 + getState.hyva * 1) / aania
     }
     const positiivisia = () => {
-        let aania = getState.huono + getState.neutraali + getState.hyva
+        let aania = getState.summa
+        //let aania = getState.huono + getState.neutraali + getState.hyva
         return (getState.hyva / aania) * 100
     }
-    return (
-        <div>
-            <h3>{tulos}</h3>
-            <Statistic text="huono" value={getState.huono} />
-            <Statistic text="neutraali" value={getState.neutraali} />
-            <Statistic text="hyva" value={getState.hyva} />
+    if (getState.summa === 0)
+        return (
             <div>
-                <Statistic text="Keskiarvo" value={keskiarvo()} />
+                <h3>{tulos}</h3>
+                <Statistic text="huono" value={getState.huono} />
+                <Statistic text="neutraali" value={getState.neutraali} />
+                <Statistic text="hyva" value={getState.hyva} />
+                <h3>{stats}</h3>
+                <div>
+                    <p>ei yhtään palautetta annettu</p>
+                </div>
             </div>
+        )
+    else
+        return (
             <div>
-                <Statistic text="Positiivisia" value={positiivisia()} />%
+                <h3>{tulos}</h3>
+                <Statistic text="huono" value={getState.huono} />
+                <Statistic text="neutraali" value={getState.neutraali} />
+                <Statistic text="hyva" value={getState.hyva} />
+                <h3>{stats}</h3>
+                <div>
+                    <Statistic text="Keskiarvo" value={keskiarvo()} />
+                </div>
+                <div>
+                    <Statistic text="Positiivisia" value={positiivisia()} />%
+                </div>
             </div>
-        </div>
-    )
+        )
 }
 
 const Button = ({ handleClick, text }) => (
