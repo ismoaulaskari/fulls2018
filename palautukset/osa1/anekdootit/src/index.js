@@ -38,6 +38,7 @@ class App extends React.Component {
         <div>
           {this.props.anecdotes[this.state.selected]}
         </div>
+        <p><i>{this.state.votes[this.state.selected] ? this.state.votes[this.state.selected] : 0} ääntä</i></p>
         <button onClick={this.vote(this.state.selected)}>äänestä tätä</button>
       </div>
     )
