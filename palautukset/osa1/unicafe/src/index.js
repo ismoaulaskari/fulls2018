@@ -33,39 +33,56 @@ class App extends React.Component {
     }
 
     render() {
-        const keskiarvo = () => {
-            let aania = this.state.huono + this.state.neutraali + this.state.hyva
-            return (this.state.huono * -1 + this.state.neutraali * 0 + this.state.hyva * 1) / aania
-        }
-        const positiivisia = () => {
-            let aania = this.state.huono + this.state.neutraali + this.state.hyva
-            return (this.state.hyva / aania)
-        }        
         return (
             <div>
                 <h1>{intro}</h1>
                 <div>
-                    <button onClick={this.klikHuono}>huono</button>
-                    <button onClick={this.klikNeutraali}>neutraali</button>
-                    <button onClick={this.klikHyva}>hyva</button>
-                    <br />
-                    <h3>{tulos}</h3>
-                    <br />Huono {this.state.huono}
-                    <br />Neutraali {this.state.neutraali}
-                    <br />hyva {this.state.hyva}
-                    <br/>
-                    <div>
-                    <h3>Keskiarvo</h3>
-                    {keskiarvo()}
-                    </div>
-                    <div>
-                    <h3>Positiivisia</h3>
-                    {positiivisia()}%
-                    </div>                    
+                    <Button handleClick={this.klikHuono} text="huono" />
+                    <Button handleClick={this.klikNeutraali} text="neutraali" />
+                    <Button handleClick={this.klikHyva} text="hyva" />
+                    <Statistics getState={this.state} />
                 </div>
             </div>
         )
     }
 }
+
+const Statistic = ({ text, value }) => {
+    return (
+        <p>{text} {value}</p>
+    )
+}
+
+const Statistics = ({ getState }) => {
+    const keskiarvo = () => {
+        let aania = getState.huono + getState.neutraali + getState.hyva
+        return (getState.huono * -1 + getState.neutraali * 0 + getState.hyva * 1) / aania
+    }
+    const positiivisia = () => {
+        let aania = getState.huono + getState.neutraali + getState.hyva
+        return (getState.hyva / aania) * 100
+    }
+    return (
+        <div>
+            <h3>{tulos}</h3>
+            <Statistic text="huono" value={getState.huono} />
+            <Statistic text="neutraali" value={getState.neutraali} />
+            <Statistic text="hyva" value={getState.hyva} />
+            <div>
+                <Statistic text="Keskiarvo" value={keskiarvo()} />
+            </div>
+            <div>
+                <Statistic text="Positiivisia" value={positiivisia()} />%
+            </div>
+        </div>
+    )
+}
+
+const Button = ({ handleClick, text }) => (
+    <button onClick={handleClick}>
+        {text}
+    </button>
+)
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
