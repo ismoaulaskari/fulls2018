@@ -5,14 +5,25 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: 0
+      selected: 3
     }
   }
 
-  render() {
+  shuffle = (l) => {
+    return () => {
+      this.setState({
+        selected: Math.floor(l * Math.random())
+      })
+    }
+  }
+
+  render() {    
     return (
       <div>
-        {this.props.anecdotes[this.state.selected]}
+        <button onClick={this.shuffle(this.props.anecdotes.length)}>sekoita</button>
+        <div>
+          {this.props.anecdotes[this.state.selected]}
+        </div>
       </div>
     )
   }
