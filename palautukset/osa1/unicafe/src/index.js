@@ -37,14 +37,23 @@ class App extends React.Component {
         })
     }
 
+    klik = (kohde) => {
+        return () => {
+            this.setState({
+                [kohde]: this.state[kohde] + 1,
+                summa: this.state.summa + 1
+            })
+        }
+    }
+
     render() {
         return (
             <div>
                 <h1>{intro}</h1>
                 <div>
-                    <Button handleClick={this.klikHuono} text="huono" />
-                    <Button handleClick={this.klikNeutraali} text="neutraali" />
-                    <Button handleClick={this.klikHyva} text="hyva" />
+                    <Button handleClick={this.klik("huono")} teksti="huono" />
+                    <Button handleClick={this.klik("neutraali")} teksti="neutraali" />
+                    <Button handleClick={this.klik("hyva")} teksti="hyva" />
                     <Statistics getState={this.state} />
                 </div>
             </div>
@@ -100,9 +109,9 @@ const Statistics = ({ getState }) => {
         )
 }
 
-const Button = ({ handleClick, text }) => (
+const Button = ({ handleClick, teksti }) => (
     <button onClick={handleClick}>
-        {text}
+        {teksti}
     </button>
 )
 
