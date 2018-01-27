@@ -6,7 +6,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       selected: 0,
-      votes: {}
+      votes: {},
+      voittaja: ''
     }
   }
 
@@ -19,7 +20,7 @@ class App extends React.Component {
   }
 
   vote = (l) => {
-    const kopio = {...this.state.votes}
+    const kopio = { ...this.state.votes }
     if (kopio[l] === undefined) {
       kopio[l] = 0
     }
@@ -31,18 +32,6 @@ class App extends React.Component {
     }
   }
 
-  paras = () => {
-    const kopio = {...this.state.votes}
-    let num  = 0;
-    let maxAanet = 0;
-    let teksti = '';
-    Object.keys(kopio).foreach(key => {
-      if(kopio[key] > maxAanet) {
-        maxAanet = kopio[key]        
-        teksti = anecdotes[key]
-      }
-    });
-  }
 
   render() {
     return (
@@ -53,6 +42,7 @@ class App extends React.Component {
         </div>
         <p><i>{this.state.votes[this.state.selected] ? this.state.votes[this.state.selected] : 0} ääntä</i></p>
         <button onClick={this.vote(this.state.selected)}>äänestä tätä</button>
+        <Paras stats={this.state} />
       </div>
     )
   }
@@ -66,6 +56,36 @@ const anecdotes = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
+
+const Paras = ({ stats }) => {
+  let maxAanet = 0;
+  let teksti = '';
+  let vkeys = Object.keys(stats.votes)
+  
+
+  console.log(vkeys)
+  console.log(["0", "1"].entries)
+  if (vkeys.length > 0) {
+    vkeys.map(key => {
+      if(stats.votes[key] > maxAanet) {
+        maxAanet = stats.votes[key]
+        teksti = anecdotes[key]
+      }
+    })
+  }
+
+  let voittaja = 'ei valittu'
+  if (maxAanet > 0) {
+    voittaja = teksti + ', ' + maxAanet + ' ääntä'
+  }
+  return (
+    <div>
+      <b>Eniten ääniä saanut:</b>
+      <p><i>{voittaja}</i></p>
+    </div>
+  )
+}
+
 
 ReactDOM.render(
   <App anecdotes={anecdotes} />,
