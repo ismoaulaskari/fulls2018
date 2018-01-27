@@ -62,15 +62,13 @@ const Paras = ({ stats }) => {
   let teksti = '';
   let vkeys = Object.keys(stats.votes)
   
-
-  console.log(vkeys)
-  console.log(["0", "1"].entries)
   if (vkeys.length > 0) {
     vkeys.map(key => {
       if(stats.votes[key] > maxAanet) {
         maxAanet = stats.votes[key]
         teksti = anecdotes[key]
       }
+      return null
     })
   }
 
