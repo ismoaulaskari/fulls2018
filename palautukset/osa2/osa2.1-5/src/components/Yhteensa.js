@@ -1,15 +1,14 @@
-/*import React from 'react'
-
-const Yhteensa = (props) => {
-    let sum = 0
-    sum += props.counts[0].tehtavia
-    sum += props.counts[1].tehtavia
-    sum += props.counts[2].tehtavia
+import React from 'react'
+//https://stackoverflow.com/questions/5732043/javascript-reduce-on-array-of-objects
+const Yhteensa = ( {counts} ) => {
+    const reducer = (accumulator, currentValue) => accumulator + currentValue.tehtavia;
+    let total = counts.reduce(reducer, 0)
+  
     return (
         <div>
-            <p>yhteensä {sum} tehtävää</p>
+            <p>yhteensä {total} tehtävää</p>
         </div>
     )
 }
 
-export default Yhteensa*/
+export default Yhteensa
