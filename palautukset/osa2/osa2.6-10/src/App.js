@@ -16,11 +16,10 @@ class App extends React.Component {
   }
 
   addName = (event) => {    
-    event.preventDefault()
-    const newName = event.target.value
-    const found = this.state.persons.findIndex(n => n.name === newName)
-    if(found > -1) {
-      console.log(found)
+    const newName = this.state.newName
+    event.preventDefault()        
+    const found = this.state.persons.findIndex(n => n.name === newName)    
+    if(found > -1) {      
       this.setState({ newName: newName })
       alert("On jo luettelossa!")
       return null;
