@@ -5,11 +5,19 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas', number: '1234' }
+        { name: 'Arto Hellas', number: '050-123123423' },
+        { name: 'MacBain', number: '09-12983274' },
+        { name: 'Spede Pasasnen', number: '120391828947' },
+        { name: 'Kurkku Purkki', number: '9999999999' },
+        { name: 'Pete Best', number: '66-323233232' },
+        { name: 'Kugel Schreiber', number: '057-575757575' }
       ],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      filter: '',
+      personsToShow: []
     }
+    this.state.personsToShow = this.state.persons
   }
 
   handleNameChange = (event) => {
@@ -18,6 +26,24 @@ class App extends React.Component {
 
   handleNumberChange = (event) => {
     this.setState({ newNumber: event.target.value })
+  }
+
+  handleFilterChange = (event) => {
+    const filter = event.target.value
+    this.setState({ filter: filter })
+    this.applyFilter(filter)
+  }
+
+  applyFilter(filter) {
+    if (filter.length < 1) {
+      this.setState({ personsToShow: this.state.persons })
+    }
+    else {
+      const personsToShow = this.state.persons.filter((p) => {
+        return (p.name.search(new RegExp(filter, 'i')) > -1)
+      })
+      this.setState({ personsToShow: personsToShow })
+    }
   }
 
   addContact = (event) => {
@@ -46,6 +72,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <div >Hae: <input value={this.state.filter}
+          onChange={this.handleFilterChange} />
+        </div>
         <h2>Puhelinluettelo</h2>
         <form onSubmit={this.addContact}>
           <div>
@@ -62,7 +91,7 @@ class App extends React.Component {
         </form>
         <h2>Numerot</h2>
         <ul>
-          {this.state.persons.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
+          {this.state.personsToShow.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
         </ul>
       </div>
     )
