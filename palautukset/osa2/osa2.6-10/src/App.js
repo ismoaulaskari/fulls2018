@@ -1,4 +1,7 @@
 import React from 'react';
+import Filter from './components/Filter';
+import Form from './components/Form';
+import Listing from './components/Listing';
 
 class App extends React.Component {
   constructor(props) {
@@ -59,40 +62,24 @@ class App extends React.Component {
       name: this.state.newName,
       number: this.state.newNumber
     }
-
     const persons = this.state.persons.concat(nameObject)
 
     this.setState({
       persons: persons,
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      personsToShow: persons
     })
   }
 
   render() {
     return (
       <div>
-        <div >Hae: <input value={this.state.filter}
-          onChange={this.handleFilterChange} />
-        </div>
+        <Filter filter={this.state.filter} handler={this.handleFilterChange} />
         <h2>Puhelinluettelo</h2>
-        <form onSubmit={this.addContact}>
-          <div>
-            nimi: <input value={this.state.newName}
-              onChange={this.handleNameChange} />
-          </div>
-          <div>
-            numero: <input value={this.state.newNumber}
-              onChange={this.handleNumberChange} />
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-        </form>
+        <Form add={this.addContact} state={this.state} nameChange={this.handleNameChange} numberChange={this.handleNumberChange} />
         <h2>Numerot</h2>
-        <ul>
-          {this.state.personsToShow.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
-        </ul>
+        <Listing items={this.state.personsToShow} />
       </div>
     )
   }
