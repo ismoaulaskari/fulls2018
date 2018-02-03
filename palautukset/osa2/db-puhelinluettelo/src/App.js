@@ -9,13 +9,6 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [],
-      /*  { name: 'Arto Hellas', number: '050-123123423' },
-        { name: 'MacBain', number: '09-12983274' },
-        { name: 'Spede Pasasnen', number: '120391828947' },
-        { name: 'Kurkku Purkki', number: '9999999999' },
-        { name: 'Pete Best', number: '66-323233232' },
-        { name: 'Kugel Schreiber', number: '057-575757575' }
-      ],*/
       newName: '',
       newNumber: '',
       filter: '',
@@ -24,10 +17,10 @@ class App extends React.Component {
     this.state.personsToShow = this.state.persons
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     axios
       .get('http://localhost:3001/persons')
-      .then(response => {   
+      .then(response => {
         this.setState({ persons: response.data })
         this.applyFilter(this.state.filter)
       })
@@ -72,14 +65,19 @@ class App extends React.Component {
       name: this.state.newName,
       number: this.state.newNumber
     }
-    const persons = this.state.persons.concat(nameObject)
 
-    this.setState({
-      persons: persons,
-      newName: '',
-      newNumber: '',
-      personsToShow: persons
-    })
+    axios
+      .post('http://localhost:3001/persons', nameObject)
+      .then(response => {
+        this.setState({
+          persons: this.state.persons.concat(response.data),
+          newName: '',
+          newNumber: '',
+          personsToShow: this.state.personsToShow.concat(response.data)
+        })
+      }).catch(error => {
+        alert('Virhe lisätessä')
+      })
   }
 
   render() {
