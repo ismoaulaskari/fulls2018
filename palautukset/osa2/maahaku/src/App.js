@@ -29,7 +29,7 @@ class App extends React.Component {
     this.applyFilter(filter)
   }
 
-  applyFilter(filter) {
+  applyFilter(filter) {    
     if (filter.length < 1) {
       this.setState({ itemsToShow: [] })
     }
@@ -42,10 +42,11 @@ class App extends React.Component {
   }
 
   render() {
+    const applyFilter = (f) => this.applyFilter(f)
     return (
       <div>
         <Filter filter={this.state.filter} handler={this.handleFilterChange} />
-        <Countries items={this.state.itemsToShow} />
+        <Countries items={this.state.itemsToShow} filterHandler={(f) => applyFilter(f)} />
       </div>
     )
   }
