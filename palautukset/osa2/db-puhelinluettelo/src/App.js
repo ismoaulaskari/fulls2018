@@ -81,22 +81,24 @@ class App extends React.Component {
     const newName = this.state.newName
     const found = this.state.persons.filter(n => (n.name === newName))
     if (found.length === 1) {
-      console.log("On jo luettelossa, muutetaan!")
-      const changedPerson = { id: found[0].id, name: this.state.newName, number: this.state.newNumber }
-      personService
-        .update(found[0].id, changedPerson)
-        .then(response => {
-          const persons = this.state.persons.filter(n => n.id !== changedPerson.id)
-          this.setState({
-            persons: persons.concat(changedPerson),
-            newName: '',
-            newNumber: '',
-            personsToShow: persons.concat(changedPerson)
+      const id = found[0].id
+      if (this.confirmed("On jo luettelossa, muutetaanko ", id)) {
+        const changedPerson = { id: id, name: this.state.newName, number: this.state.newNumber }
+        personService
+          .update(id, changedPerson)
+          .then(response => {
+            const persons = this.state.persons.filter(n => n.id !== changedPerson.id)
+            this.setState({
+              persons: persons.concat(changedPerson),
+              newName: '',
+              newNumber: '',
+              personsToShow: persons.concat(changedPerson)
+            })
           })
-        })
-        .catch(error => {
-          alert('Virhe muuttaessa')
-        })
+          .catch(error => {
+            alert('Virhe muuttaessa')
+          })
+      }
     }
     else {
       const newObject = {
