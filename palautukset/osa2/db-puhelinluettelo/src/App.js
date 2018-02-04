@@ -52,6 +52,30 @@ class App extends React.Component {
     }
   }
 
+  confirmed(text, id) {
+    return window.confirm(text + this.state.persons.find(p => p.id === id).name)
+  }
+
+  deleteContact = (id) => {
+    return () => {      
+      if (this.confirmed("poistetaanko ", id)) {
+        personService.remove(id)
+          .then(response => {
+            console.log(response)
+            personService.getAll()
+              .then(response => {
+                this.setState({
+                  persons: response.data,
+                  personsToShow: response.data
+                })
+              })
+          }).catch(error => {
+            alert('Virhe poistaessa')
+          })
+      }
+    }
+  }
+
   addContact = (event) => {
     event.preventDefault()
     const newName = this.state.newName
@@ -87,7 +111,7 @@ class App extends React.Component {
         <h2>Puhelinluettelo</h2>
         <Form add={this.addContact} state={this.state} nameChange={this.handleNameChange} numberChange={this.handleNumberChange} />
         <h2>Numerot</h2>
-        <Listing items={this.state.personsToShow} />
+        <Listing items={this.state.personsToShow} deleteHandler={this.deleteContact} />
       </div>
     )
   }
