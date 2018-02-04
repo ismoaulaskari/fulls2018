@@ -2,7 +2,9 @@ import React from 'react';
 import Filter from './components/Filter';
 import Form from './components/Form';
 import Listing from './components/Listing';
+import Notification from './components/Notification'
 import personService from './services/persons'
+import './index.css'
 
 class App extends React.Component {
   constructor(props) {
@@ -12,9 +14,17 @@ class App extends React.Component {
       newName: '',
       newNumber: '',
       filter: '',
-      personsToShow: []
+      personsToShow: [],
+      success: null
     }
     this.state.personsToShow = this.state.persons
+  }
+
+  showSuccess(message) {
+    this.setState({ success: message })
+    setTimeout(() => {
+      this.setState({ success: null })
+    }, 3000)
   }
 
   componentDidMount() {
@@ -68,6 +78,7 @@ class App extends React.Component {
                   persons: response.data,
                   personsToShow: response.data
                 })
+                this.showSuccess("poisto onnistui")
               })
           }).catch(error => {
             alert('Virhe poistaessa')
@@ -94,6 +105,7 @@ class App extends React.Component {
               newNumber: '',
               personsToShow: persons.concat(changedPerson)
             })
+            this.showSuccess("päivitys onnistui")
           })
           .catch(error => {
             alert('Virhe muuttaessa')
@@ -114,6 +126,7 @@ class App extends React.Component {
             newNumber: '',
             personsToShow: this.state.personsToShow.concat(response.data)
           })
+          this.showSuccess("lisäys onnistui")
         }).catch(error => {
           alert('Virhe lisätessä')
         })
@@ -125,6 +138,7 @@ class App extends React.Component {
       <div>
         <Filter filter={this.state.filter} handler={this.handleFilterChange} />
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.success} />
         <Form add={this.addContact} state={this.state} nameChange={this.handleNameChange} numberChange={this.handleNumberChange} />
         <h2>Numerot</h2>
         <Listing items={this.state.personsToShow} deleteHandler={this.deleteContact} />
