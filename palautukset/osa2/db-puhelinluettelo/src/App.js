@@ -57,7 +57,7 @@ class App extends React.Component {
   }
 
   deleteContact = (id) => {
-    return () => {      
+    return () => {
       if (this.confirmed("poistetaanko ", id)) {
         personService.remove(id)
           .then(response => {
@@ -79,29 +79,43 @@ class App extends React.Component {
   addContact = (event) => {
     event.preventDefault()
     const newName = this.state.newName
-    const newNumber = this.state.newNumber
-    const found = this.state.persons.findIndex(n => (n.name === newName || n.number === newNumber))
-    if (found > -1) {
-      alert("On jo luettelossa!")
-      return null
-    }
-    const nameObject = {
-      name: this.state.newName,
-      number: this.state.newNumber
-    }
-
-    personService
-      .create(nameObject)
-      .then(response => {
-        this.setState({
-          persons: this.state.persons.concat(response.data),
-          newName: '',
-          newNumber: '',
-          personsToShow: this.state.personsToShow.concat(response.data)
+    const found = this.state.persons.filter(n => (n.name === newName))
+    if (found.length === 1) {
+      console.log("On jo luettelossa, muutetaan!")
+      const changedPerson = { id: found[0].id, name: this.state.newName, number: this.state.newNumber }
+      personService
+        .update(found[0].id, changedPerson)
+        .then(response => {
+          const persons = this.state.persons.filter(n => n.id !== changedPerson.id)
+          this.setState({
+            persons: persons.concat(changedPerson),
+            newName: '',
+            newNumber: '',
+            personsToShow: persons.concat(changedPerson)
+          })
         })
-      }).catch(error => {
-        alert('Virhe lisätessä')
-      })
+        .catch(error => {
+          alert('Virhe muuttaessa')
+        })
+    }
+    else {
+      const newObject = {
+        name: this.state.newName,
+        number: this.state.newNumber
+      }
+      personService
+        .create(newObject)
+        .then(response => {
+          this.setState({
+            persons: this.state.persons.concat(response.data),
+            newName: '',
+            newNumber: '',
+            personsToShow: this.state.personsToShow.concat(response.data)
+          })
+        }).catch(error => {
+          alert('Virhe lisätessä')
+        })
+    }
   }
 
   render() {
