@@ -99,16 +99,16 @@ class App extends React.Component {
           .update(id, changedPerson)
           .then(response => {
             const persons = this.state.persons.filter(n => n.id !== changedPerson.id)
-            this.setState({
-              persons: persons.concat(changedPerson),
-              newName: '',
-              newNumber: '',
-              personsToShow: persons.concat(changedPerson)
-            })
+            this.runSetPersons(persons.concat(changedPerson))
             this.showSuccess("päivitys onnistui")
           })
           .catch(error => {
-            alert('Virhe muuttaessa')
+            if (error.message === 'Request failed with status code 404') {
+              this.runCreate({ name: changedPerson.name, number: changedPerson.number })
+            }
+            else {
+              alert('Virhe muuttaessa ' + error.message)
+            }
           })
       }
     }
@@ -117,20 +117,28 @@ class App extends React.Component {
         name: this.state.newName,
         number: this.state.newNumber
       }
-      personService
-        .create(newObject)
-        .then(response => {
-          this.setState({
-            persons: this.state.persons.concat(response.data),
-            newName: '',
-            newNumber: '',
-            personsToShow: this.state.personsToShow.concat(response.data)
-          })
-          this.showSuccess("lisäys onnistui")
-        }).catch(error => {
-          alert('Virhe lisätessä')
-        })
+      this.runCreate(newObject)
     }
+  }
+
+  runCreate(newObject) {
+    personService
+      .create(newObject)
+      .then(response => {
+        this.runSetPersons(this.state.persons.concat(response.data))
+        this.showSuccess("lisäys onnistui")
+      }).catch(error => {
+        alert('Virhe lisätessä')
+      })
+  }
+
+  runSetPersons(persons) {
+    this.setState({
+      persons: persons,
+      newName: '',
+      newNumber: '',
+      personsToShow: persons
+    })
   }
 
   render() {
