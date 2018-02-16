@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint ."
   },
   "author": "Ismo Aulaskari",
@@ -21,7 +21,8 @@
   },
   "devDependencies": {
     "eslint": "^4.17.0",
-    "nodemon": "^1.14.12",
-    "morgan-body": "^2.0.2"
+    "jest": "^22.3.0",
+    "morgan-body": "^2.0.2",
+    "nodemon": "^1.14.12"
   }
 }
