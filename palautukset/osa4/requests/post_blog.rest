@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+     "title": "My life",
+  "author": "Hulk Hogan",
+  "url": "http://localhost",
+  "likes": 0   
+}
+
