@@ -46,7 +46,15 @@ const blogs = [
     url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
     likes: 2,
     __v: 0
-  }
+  },
+  {
+    _id: '5a422b891b54a676234d17222',
+    title: 'Dummy',
+    author: 'Dummy',
+    url: 'null',
+    likes: 10,
+    __v: 0
+  },
 ]
 
 module.exports = blogs

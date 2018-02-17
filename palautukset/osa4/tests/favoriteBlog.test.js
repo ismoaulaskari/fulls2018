@@ -21,4 +21,10 @@ describe('favorite blog', () => {
     const result = listHelper.favoriteBlog(listWithManyBlogs)
     expect(result).toBe(blogs[2])
   })
+
+  test('when list has many best blogs finds one of them', () => {
+    const result = listHelper.favoriteBlog(listWithManyBlogs)
+    expect(result).toEqual(blogs[2] || blogs[6])
+  })
+
 })
