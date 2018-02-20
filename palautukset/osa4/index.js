@@ -1,4 +1,5 @@
-require('dotenv').config()
+const config = require('./utils/config')
+
 //const http = require('http')
 const express = require('express')
 const app = express()
@@ -12,8 +13,7 @@ app.use('/api/blogs', blogsRouter)
 
 const mongoose = require('mongoose')
 
-const mongoUrl = process.env.DB_URL
-mongoose.connect(mongoUrl)
+mongoose.connect(config.mongoUrl)
   .then(() => {
     console.log('connected to database')
   })
@@ -22,8 +22,7 @@ mongoose.connect(mongoUrl)
   })
 mongoose.Promise = global.Promise
 
-const PORT = 3003
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+app.listen(config.PORT, () => {
+  console.log(`Server running on port ${config.PORT}`)
 })
 
