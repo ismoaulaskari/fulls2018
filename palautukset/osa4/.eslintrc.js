@@ -5,7 +5,8 @@ module.exports = {
         "module": false,
         "test": true,
         "expect": true,
-        "describe": true
+        "describe": true,
+	"afterAll": true
     },
     "env": {
         "browser": true,
