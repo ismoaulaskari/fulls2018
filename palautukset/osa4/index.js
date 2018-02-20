@@ -23,10 +23,6 @@ mongoose.connect(config.mongoUrl)
   })
 mongoose.Promise = global.Promise
 
-app.listen(config.PORT, () => {
-  console.log(`Server running on port ${config.PORT}`)
-})
-
 const server = http.createServer(app)
 
 server.listen(config.port, () => {
