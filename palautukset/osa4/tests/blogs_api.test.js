@@ -16,6 +16,12 @@ const broken = {
   'likes': 0
 }
 
+const nolikes = {
+  'title': 'Unhappy',
+  'author': 'Evilness',
+  'url': 'https://foo.bar',
+}
+
 describe('api level tests', () => {
   test('blogs are returned as json', async () => {
     await api
@@ -42,6 +48,14 @@ describe('api level tests', () => {
     expect(responseblog.id).toBeDefined()
   })
 
+  test('posted blog with no likes gets 0 likes', async () => {
+    const postresponse = await api
+      .post('/api/blogs')
+      .send(nolikes)
+
+    const responseblog = postresponse.body
+    expect(responseblog.likes).toBe(0)
+  })
 
   test('broken blog gets 400 as response', async () => {
     await api
