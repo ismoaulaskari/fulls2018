@@ -9,6 +9,12 @@ const hogan = {
   'likes': 0
 }
 
+const broken = {
+  'title': '',
+  'author': 'Jake the Snake',
+  'url': '',
+  'likes': 0
+}
 
 describe('api level tests', () => {
   test('blogs are returned as json', async () => {
@@ -35,6 +41,15 @@ describe('api level tests', () => {
     expect(responseblog.title).toContain(hogan.title)
     expect(responseblog.id).toBeDefined()
   })
+
+
+  test('broken blog gets 400 as response', async () => {
+    await api
+      .post('/api/blogs')
+      .send(broken)
+      .expect(400)
+  })
+
 
   afterAll(() => {
     server.close()
