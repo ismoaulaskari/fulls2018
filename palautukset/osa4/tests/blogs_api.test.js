@@ -92,6 +92,18 @@ describe('api level tests', () => {
       .expect(400)
   })
 
+  test('deleted blogs disappear from db', async () => {
+    const blogsBefore = await blogsInDb()
+
+    await Promise.all(blogsBefore.map(n => {
+      api
+        .delete(`/api/blogs/${n.id}`)
+        .expect(204)
+    }))
+
+    const blogsAfter = await blogsInDb()
+    expect(blogsAfter.length).toBe(0)
+  })
 
   afterAll(() => {
     server.close()
