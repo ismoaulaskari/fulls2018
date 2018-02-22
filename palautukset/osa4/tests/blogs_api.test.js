@@ -94,15 +94,25 @@ describe('api level tests', () => {
 
   test('deleted blogs disappear from db', async () => {
     const blogsBefore = await blogsInDb()
-
-    await Promise.all(blogsBefore.map(n => {
-      api
-        .delete(`/api/blogs/${n.id}`)
-        .expect(204)
-    }))
+    expect(blogsBefore.length).toBe(3)
+    try {
+      await (blogsBefore.map(n => {
+        console.log(`delete id ${n.id}`)
+        api
+          .delete(`/api/blogs/${n.id}`)
+          .expect(204)
+      }))
+    }
+    catch (error) {
+      console.log(error)
+    }
 
     const blogsAfter = await blogsInDb()
-    expect(blogsAfter.length).toBe(0)
+    blogsBefore.map(n => {
+      //console.log(n)
+      expect(blogsAfter).not.toContain(n)
+    })
+    // console.log(blogsAfter)
   })
 
   afterAll(() => {

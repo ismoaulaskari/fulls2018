@@ -46,7 +46,11 @@ blogsRouter.post('/', async (request, response) => {
 blogsRouter.delete('/:id', async (request, response) => {
   try {
     const id = request.params.id
-    await Blog.remove(id)
+    const removable = await Blog.findById(id)
+    if (!removable) {
+      return response.status(404)
+    }
+    await Blog.remove(removable)
     response.status(204).end()
   } catch (error) {
     console.log(error)
