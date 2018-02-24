@@ -5,12 +5,13 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const blogsRouter = require('./controllers/blogsRouter')
+const usersRouter = require('./controllers/usersRouter')
 
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static('build'))
 app.use('/api/blogs', blogsRouter)
-
+app.use('/api/users', usersRouter)
 
 const mongoose = require('mongoose')
 
