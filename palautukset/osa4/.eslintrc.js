@@ -6,10 +6,10 @@ module.exports = {
         "test": true,
         "expect": true,
         "describe": true,
-	"afterAll": true,
+        "afterAll": true,
         "beforeAll": true,
         "beforeEach": true,
-	"it": true
+        "it": true
     },
     "env": {
         "browser": true,
