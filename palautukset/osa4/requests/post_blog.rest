@@ -1,6 +1,6 @@
 POST http://localhost:3001/api/blogs
 content-type: application/json
-authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjVhOTFhN2YyYmE0ZGM1MTRiYzU5MjFmYSIsImlhdCI6MTUxOTU4MzI3Mn0.iwjHiw9lJb0Pu1jPxqlMBpYXQ2U-j-c97NGakrf_3y8
+authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjVhOTFhN2YyYmE0ZGM1MTRiYzU5MjFmYSIsImlhdCI6MTUxOTU5MDM0MH0.-nMzOtVZT5WrfpuhbBycDEGRCRnQseQDexdzsCFYQss
 
 {
      "title": "My life",

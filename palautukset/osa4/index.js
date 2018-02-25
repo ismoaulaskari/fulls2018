@@ -7,13 +7,17 @@ const cors = require('cors')
 const blogsRouter = require('./controllers/blogsRouter')
 const usersRouter = require('./controllers/usersRouter')
 const loginRouter = require('./controllers/loginRouter')
+const tokenExtractor = require('./middleware/tokenExtractor')
+//const error = require('./middleware/error')
 
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static('build'))
+app.use(tokenExtractor.extract)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+//app.use(error())
 
 const mongoose = require('mongoose')
 
