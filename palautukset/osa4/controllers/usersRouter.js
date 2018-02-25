@@ -13,6 +13,25 @@ usersRouter.get('/', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
   try {
     const body = request.body
+    if (!body.password || body.password.length < 3) {
+      return response.status(400).json({ error: 'password too short' })
+    }
+    if (!body.username) {
+      return response.status(400).json({ error: 'no username given' })
+    }
+    if (!('adult' in body)) {
+      body.adult = true
+    }
+
+    const found = await User.find({ 'username': body.username })
+    if (found) {
+      if (found.constructor === Array && found.length > 0) {
+        return response.status(400).json({ error: 'username already exists' })
+      }
+      if (found.username === body.username) {
+        return response.status(400).json({ error: 'username already exists' })
+      }
+    }
 
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)

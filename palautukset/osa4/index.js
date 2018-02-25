@@ -26,9 +26,11 @@ mongoose.Promise = global.Promise
 
 const server = http.createServer(app)
 
-server.listen(config.port, () => {
-  console.log(`Server running on port ${config.port}`)
-})
+if(!module.parent) {
+  server.listen(config.port, () => {
+    console.log(`Server running on port ${config.port}`)
+  })
+}
 
 server.on('close', () => {
   mongoose.connection.close()

@@ -35,12 +35,17 @@ const noAdult =
   }
 
 describe('api level user tests', () => {
-  beforeAll(async () => {
-    await User.remove({})
-    const initialUsers = [testUser]
+  beforeEach(async () => {
+    try {
+      await User.remove({})
+      const initialUsers = [testUser]
 
-    const userObjects = initialUsers.map(n => new User(n))
-    await Promise.all(userObjects.map(n => n.save()))
+      const userObjects = initialUsers.map(n => new User(n))
+      await Promise.all(userObjects.map(n => n.save()))
+    }
+    catch (error) {
+      console.log('BeforeEach: ', error)
+    }
   })
 
   test('there are users in the db', async () => {
@@ -49,7 +54,7 @@ describe('api level user tests', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
-    const responseuser = postresponse.body    
+    const responseuser = postresponse.body
     expect(responseuser[0].id).toBeDefined()
   })
 
@@ -73,7 +78,7 @@ describe('api level user tests', () => {
       .expect('Content-Type', /application\/json/)
 
     const response = postresponse.body
-    console.log(postresponse.body)
+    console.log(response)
     expect(response.error).toBe('username already exists')
   })
 
