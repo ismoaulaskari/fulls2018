@@ -30,12 +30,48 @@ describe('console', () => {
   })
 })
 
+
+const testUser =
+  {
+    'username': 'abc',
+    'name': 'Mr Apitest',
+    'password': 'alskedjq',
+    'adult': false
+  }
+
+let token = ''
+
 describe('api level tests', () => {
+  const mkUser = (async () => {
+    const adduserResponse = await api
+      .post('/api/users')
+      .send(testUser)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const responseuser = adduserResponse.body
+    expect(responseuser._id).toBeDefined()
+
+    const loginResponse = await api
+      .post('/api/login')
+      .send({ 'username': testUser.username, 'password': testUser.password })
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    token = loginResponse.body.token
+    expect(token).toBeDefined()
+  })
+
   beforeEach(async () => {
     await Blog.remove({})
 
     const blogObjects = initialBlogs.map(n => new Blog(n))
     await Promise.all(blogObjects.map(n => n.save()))
+    mkUser()
+  })
+
+  test('make user', async () => {
+    mkUser()
   })
 
   test('blogs are returned as json', async () => {
@@ -58,6 +94,7 @@ describe('api level tests', () => {
     const postresponse = await api
       .post('/api/blogs')
       .send(hogan)
+      .set('Authorization', `bearer ${token}`)
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
@@ -80,6 +117,7 @@ describe('api level tests', () => {
     const postresponse = await api
       .post('/api/blogs')
       .send(nolikes)
+      .set('Authorization', `bearer ${token}`)
 
     const responseblog = postresponse.body
     expect(responseblog.likes).toBe(0)
@@ -89,6 +127,7 @@ describe('api level tests', () => {
     await api
       .post('/api/blogs')
       .send(broken)
+      .set('Authorization', `bearer ${token}`)
       .expect(400)
   })
 
