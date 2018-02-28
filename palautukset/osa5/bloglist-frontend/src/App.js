@@ -19,6 +19,12 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      this.setState({ user })
+      blogService.setToken(user.token)
+    }
   }
 
   handleLoginFieldChange = (event) => {
@@ -33,10 +39,27 @@ class App extends React.Component {
         password: this.state.password
       })
 
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
       this.setState({ username: '', password: '', user })
     } catch (exception) {
       this.setState({
         error: 'käyttäjätunnus tai salasana virheellinen',
+      })
+      setTimeout(() => {
+        this.setState({ error: null })
+      }, 5000)
+    }
+  }
+
+  logout = async (event) => {
+    event.preventDefault()
+    try {
+      window.localStorage.removeItem('loggedBlogappUser')
+      this.setState({ user: null })
+    } catch (exception) {
+      this.setState({
+        error: 'Logout epäonnistui',
       })
       setTimeout(() => {
         this.setState({ error: null })
@@ -82,13 +105,13 @@ class App extends React.Component {
 
     return (
       <div>
-        <p>{this.state.user.name} logged in</p>
+        <p>{this.state.user.name} logged in    <a onClick={this.logout}>logout</a></p>
         <h2>blogs</h2>
         {this.state.blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
       </div>
-    );
+    )
   }
 }
 
