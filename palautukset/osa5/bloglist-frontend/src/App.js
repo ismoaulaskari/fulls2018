@@ -1,5 +1,7 @@
 import React from 'react'
 import Blog from './components/Blog'
+import Login from './components/Login'
+import Session from './components/Session'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -67,45 +69,14 @@ class App extends React.Component {
     }
   }
 
-  loginForm() {
-    return (
-      <div>
-        <h2>Kirjaudu</h2>
-
-        <form onSubmit={this.login}>
-          <div>
-            käyttäjätunnus
-          <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleLoginFieldChange}
-            />
-          </div>
-          <div>
-            salasana
-          <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleLoginFieldChange}
-            />
-          </div>
-          <button type="submit">kirjaudu</button>
-        </form>
-      </div>
-    )
-  }
-
-
   render() {
     if (this.state.user === null) {
-      return this.loginForm()
+      return <Login loginHandler={this.login} state={this.state} fieldHandler={this.handleLoginFieldChange} />
     }
 
     return (
       <div>
-        <p>{this.state.user.name} logged in    <a onClick={this.logout}>logout</a></p>
+        <Session username={this.state.user.name} logoutHandler={this.logout} />
         <h2>blogs</h2>
         {this.state.blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
