@@ -14,7 +14,7 @@ class App extends React.Component {
     this.state = {
       user: null,
       success: null,
-      error: null,      
+      error: null,
       username: '',
       password: '',
       blogs: [],
@@ -44,6 +44,12 @@ class App extends React.Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
+  hideStatus = (status) => {
+    setTimeout(() => {
+      this.setState({ [status]: null })
+    }, 5000)
+  }
+
   create = async (event) => {
     event.preventDefault()
     try {
@@ -54,20 +60,20 @@ class App extends React.Component {
         url: this.state.url
       })
 
-      this.setState({ 
-        blogs: this.state.blogs.concat(blog), 
+      this.setState({
+        blogs: this.state.blogs.concat(blog),
         title: '',
         author: '',
-        url: ''  
+        url: '',
+        success: 'uusi blogi luotu'
       })
+      this.hideStatus('success')
 
     } catch (exception) {
       this.setState({
         error: 'blogin luonti pieleen',
       })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 5000)
+      this.hideStatus('error')
     }
   }
 
@@ -81,14 +87,13 @@ class App extends React.Component {
 
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
-      this.setState({ username: '', password: '', user })
+      this.setState({ username: '', password: '', user, success: "login ok" })
+      this.hideStatus('success')
     } catch (exception) {
       this.setState({
         error: 'käyttäjätunnus tai salasana virheellinen',
       })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 5000)
+      this.hideStatus('error')
     }
   }
 
@@ -96,27 +101,30 @@ class App extends React.Component {
     event.preventDefault()
     try {
       window.localStorage.removeItem('loggedBlogappUser')
-      this.setState({ user: null })
+      this.setState({ user: null, success: 'kirjauduit ulos' })
+      this.hideStatus('success')
     } catch (exception) {
       this.setState({
         error: 'Logout epäonnistui',
       })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 5000)
+      this.hideStatus('error')
     }
   }
 
   render() {
     if (this.state.user === null) {
-      return <Login loginHandler={this.login} state={this.state} fieldHandler={this.handleFieldChange} />
+      return <div>
+        <Notification status="success" message={this.state.success} />
+        <Notification status="error" message={this.state.error} />
+        <Login loginHandler={this.login} state={this.state} fieldHandler={this.handleFieldChange} />
+      </div>
     }
 
     return (
       <div>
         <Session username={this.state.user.name} logoutHandler={this.logout} />
-        <Notification status="success" message={this.state.success}/>
-        <Notification status="error" message={this.state.error}/>
+        <Notification status="success" message={this.state.success} />
+        <Notification status="error" message={this.state.error} />
         <h2>create new</h2>
         <NewBlog createHandler={this.create} state={this.state} fieldHandler={this.handleFieldChange} />
         <h2>blogs</h2>
