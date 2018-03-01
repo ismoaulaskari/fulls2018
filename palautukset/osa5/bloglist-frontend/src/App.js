@@ -3,15 +3,18 @@ import Blog from './components/Blog'
 import NewBlog from './components/NewBlog'
 import Login from './components/Login'
 import Session from './components/Session'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './index.css'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       user: null,
-      error: null,
+      success: null,
+      error: null,      
       username: '',
       password: '',
       blogs: [],
@@ -51,7 +54,12 @@ class App extends React.Component {
         url: this.state.url
       })
 
-      this.setState({ blogs: this.state.blogs.concat(blog) })
+      this.setState({ 
+        blogs: this.state.blogs.concat(blog), 
+        title: '',
+        author: '',
+        url: ''  
+      })
 
     } catch (exception) {
       this.setState({
@@ -107,6 +115,8 @@ class App extends React.Component {
     return (
       <div>
         <Session username={this.state.user.name} logoutHandler={this.logout} />
+        <Notification status="success" message={this.state.success}/>
+        <Notification status="error" message={this.state.error}/>
         <h2>create new</h2>
         <NewBlog createHandler={this.create} state={this.state} fieldHandler={this.handleFieldChange} />
         <h2>blogs</h2>
