@@ -4,6 +4,7 @@ import NewBlog from './components/NewBlog'
 import Login from './components/Login'
 import Session from './components/Session'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './index.css'
@@ -116,7 +117,9 @@ class App extends React.Component {
       return <div>
         <Notification status="success" message={this.state.success} />
         <Notification status="error" message={this.state.error} />
-        <Login loginHandler={this.login} state={this.state} fieldHandler={this.handleFieldChange} />
+        <Togglable buttonLabel="login">
+          <Login loginHandler={this.login} state={this.state} fieldHandler={this.handleFieldChange} />
+        </Togglable>
       </div>
     }
 
@@ -136,4 +139,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default App
