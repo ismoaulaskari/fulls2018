@@ -1,4 +1,5 @@
 import React from 'react'
+
 const NewBlog = ({ createHandler, state, fieldHandler }) => (
   <form onSubmit={createHandler}>
     <div>
