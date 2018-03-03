@@ -132,8 +132,8 @@ class App extends React.Component {
         <NewBlog createHandler={this.create} state={this.state} fieldHandler={this.handleFieldChange} />
         <h2>blogs</h2>
         {this.state.blogs.map(blog =>
-          <div>
-            <Togglable buttonLabel={`${blog.author} ${blog.title}`} initial={false} cancelLabel={`${blog.author} ${blog.title}`}>
+          <div key={blog.id}>
+            <Togglable key={blog.id} buttonLabel={`${blog.author} ${blog.title}`} initial={false} cancelLabel={`${blog.author} ${blog.title}`}>
               <Blog key={blog.id} blog={blog} all={true} />
             </Togglable>
           </div>
