@@ -4,7 +4,7 @@ import actionFor from './actionFor'
 
 
 class App extends React.Component {
-  
+
   addVote = (anecdote) => () => {
     this.context.store.dispatch(
       actionFor.voteAdding(anecdote)
@@ -16,10 +16,10 @@ class App extends React.Component {
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotes.map(anecdote=>
+        {anecdotes.sort((a, b) => a.votes < b.votes).map(anecdote =>
           <div key={anecdote.id}>
             <div>
-              {anecdote.content} 
+              {anecdote.content}
             </div>
             <div>
               has {anecdote.votes}
@@ -30,7 +30,7 @@ class App extends React.Component {
         <h2>create new</h2>
         <form>
           <div><input /></div>
-          <button>create</button> 
+          <button>create</button>
         </form>
       </div>
     )
