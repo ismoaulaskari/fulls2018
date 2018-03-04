@@ -4,24 +4,25 @@ import Adapter from 'enzyme-adapter-react-16'
 //import Note from './Note'
 import Togglable from './Togglable'
 
-describe.skip('<Togglable />', () => {
+describe('<Togglable />', () => {
   let togglableComponent
 
   beforeEach(() => {
     togglableComponent = mount(
-      <Togglable buttonLabel="show..." cancelLabel="hide..." initial="true">
+      <Togglable buttonLabel="show..." cancelLabel="hide..." initial={false}>
         <div className="testDiv" />
       </Togglable>
     )
-    console.log(togglableComponent.debug())
+    //console.log(togglableComponent.debug())
   })
 
   it('renders its children', () => {
-    expect(togglableComponent.contains(<div class="testDiv" />)).toEqual(true)
+    expect(togglableComponent.contains(<div className="testDiv" />)).toEqual(true)
   })
 
   it('at start the children are not displayed', () => {
     const div = togglableComponent.find('.togglableContent')
+    console.log(div.debug())
     expect(div.getElement().props.style).toEqual({ display: 'none' })
   })
 
