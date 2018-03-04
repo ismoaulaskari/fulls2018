@@ -4,9 +4,11 @@ import { createStore } from 'redux'
 import counterReducer from './counterReducer'
 
 const store = createStore(counterReducer)
+let state = store.getState()
 
-const Statistiikka = () => {  
-  const state = store.getState()
+const Statistiikka = () => {
+  state = store.getState()
+  console.log(state)
   const palautteita = state.good + state.ok + state.bad
 
   if (palautteita === 0) {
@@ -25,15 +27,15 @@ const Statistiikka = () => {
         <tbody>
           <tr>
             <td>hyvä</td>
-            <td></td>
+            <td>{state.good}</td>
           </tr>
           <tr>
             <td>neutraali</td>
-            <td></td>
+            <td>{state.ok}</td>
           </tr>
           <tr>
             <td>huono</td>
-            <td></td>
+            <td>{state.bad}</td>
           </tr>
           <tr>
             <td>keskiarvo</td>
@@ -46,14 +48,14 @@ const Statistiikka = () => {
         </tbody>
       </table>
 
-      <button>nollaa tilasto</button>
+      <button onClick={e => store.dispatch({ type: 'ZERO' })}>nollaa tilasto</button>
     </div >
   )
 }
 
 class App extends React.Component {
   klik = (nappi) => () => {
-    store.dispatch(nappi)
+    store.dispatch({ type: nappi })
   }
 
   render() {
@@ -69,4 +71,9 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+}
+
+renderApp()
+store.subscribe(renderApp)
