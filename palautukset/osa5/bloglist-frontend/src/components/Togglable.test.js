@@ -21,8 +21,7 @@ describe('<Togglable />', () => {
   })
 
   it('at start the children are not displayed', () => {
-    const div = togglableComponent.find('.togglableContent')
-    console.log(div.debug())
+    const div = togglableComponent.find('.togglableContent')    
     expect(div.getElement().props.style).toEqual({ display: 'none' })
   })
 
