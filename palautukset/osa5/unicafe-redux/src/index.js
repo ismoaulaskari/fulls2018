@@ -12,7 +12,6 @@ const Statistiikka = () => {
   const sum = () => {
     return state.good + state.ok + state.bad
   }
-
   const avg = () => {
     let votes = sum()
     return (state.bad * -1 + state.neutral * 0 + state.good * 1) / votes
@@ -21,7 +20,6 @@ const Statistiikka = () => {
     let votes = sum()
     return (state.good / votes) * 100 + "%"
   }
-
   const palautteita = sum()
 
   if (palautteita === 0) {
