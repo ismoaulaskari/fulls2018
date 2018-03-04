@@ -27,6 +27,8 @@ const reducer = (state = initialState, action) => {
       let target = state.find(e => e.id === action.data)
       target = { ...target, votes: target.votes + 1 }
       return state.map(a => a.id !== target.id ? a : target)
+    case 'ADD_NEW':
+      return state.concat(asObject(action.data))
     default: return state
   }
 }

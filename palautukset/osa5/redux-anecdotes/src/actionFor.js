@@ -1,8 +1,14 @@
 const actionFor = {
-  voteAdding(anecdote) {
+  voteAdding(id) {
     return {
       type: 'ADD_VOTE',
-      data: anecdote
+      data: id
+    }
+  },
+  anecdoteAdding(text) {
+    return {
+      type: 'ADD_NEW',
+      data: text
     }
   }
 }
