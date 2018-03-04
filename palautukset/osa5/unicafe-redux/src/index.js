@@ -1,13 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import counterReducer from './counterReducer'
 
-const Statistiikka = () => {
-  const palautteita = 0
+const store = createStore(counterReducer)
+
+const Statistiikka = () => {  
+  const state = store.getState()
+  const palautteita = state.good + state.ok + state.bad
 
   if (palautteita === 0) {
     return (
       <div>
-        <h2>stataistiikka</h2>
+        <h2>statistiikka</h2>
         <div>ei yhtään palautetta annettu</div>
       </div>
     )
@@ -48,7 +53,7 @@ const Statistiikka = () => {
 
 class App extends React.Component {
   klik = (nappi) => () => {
-
+    store.dispatch(nappi)
   }
 
   render() {
