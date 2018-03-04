@@ -7,9 +7,22 @@ const store = createStore(counterReducer)
 let state = store.getState()
 
 const Statistiikka = () => {
-  state = store.getState()
-  console.log(state)
-  const palautteita = state.good + state.ok + state.bad
+  state = store.getState()  
+
+  const sum = () => {
+    return state.good + state.ok + state.bad
+  }
+
+  const avg = () => {
+    let votes = sum()
+    return (state.bad * -1 + state.neutral * 0 + state.good * 1) / votes
+  }
+  const positiivisia = () => {
+    let votes = sum()
+    return (state.good / votes) * 100 + "%"
+  }
+
+  const palautteita = sum()
 
   if (palautteita === 0) {
     return (
@@ -39,11 +52,11 @@ const Statistiikka = () => {
           </tr>
           <tr>
             <td>keskiarvo</td>
-            <td></td>
+            <td>{String(avg())}</td>
           </tr>
           <tr>
             <td>positiivisia</td>
-            <td></td>
+            <td>{positiivisia()}</td>
           </tr>
         </tbody>
       </table>
