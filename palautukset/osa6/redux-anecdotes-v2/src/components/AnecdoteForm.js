@@ -1,11 +1,14 @@
 import React from 'react'
 import { anecdoteCreation } from '../reducers/anecdoteReducer'
+import { hideInFive, notificationSetting } from '../reducers/notificationReducer'
 
 class AnecdoteForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const content = e.target.anecdote.value
     this.props.store.dispatch(anecdoteCreation(content))
+    this.props.store.dispatch(notificationSetting(`a new anecdote: ${content}`))
+    hideInFive(this.props.store)
     e.target.anecdote.value = ''
   }
   render() {
