@@ -4,7 +4,7 @@ import { hideInFive, notificationSetting } from '../reducers/notificationReducer
 
 class AnecdoteList extends React.Component {
   render() {
-    const anecdotes = this.props.store.getState().anecdotes
+    const anecdotes = this.props.store.getState().filtered.data
     return (
       <div>
         <h2>Anecdotes</h2>

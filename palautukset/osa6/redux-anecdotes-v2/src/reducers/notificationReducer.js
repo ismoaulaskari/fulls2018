@@ -20,7 +20,7 @@ export const notificationSetting = (notification) => {
 
 export const notificationHiding = () => {
   return {
-    type: 'HIDE_NOTIFICATION'    
+    type: 'HIDE_NOTIFICATION'
   }
 }
 
