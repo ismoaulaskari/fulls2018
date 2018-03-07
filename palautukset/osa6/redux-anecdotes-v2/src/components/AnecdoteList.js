@@ -1,6 +1,6 @@
 import React from 'react'
 import { voteAdding } from '../reducers/anecdoteReducer'
-import { hideInFive, notificationSetting } from '../reducers/notificationReducer'
+import { notificationHiding, notificationSetting } from '../reducers/notificationReducer'
 
 class AnecdoteList extends React.Component {
   render() {
@@ -18,7 +18,9 @@ class AnecdoteList extends React.Component {
               <button onClick={() => {
                 this.props.store.dispatch(voteAdding(anecdote))
                 this.props.store.dispatch(notificationSetting(`A vote for ${anecdote.content}`))
-                hideInFive(this.props.store)
+                setTimeout(() => {
+                  this.props.store.dispatch(notificationHiding())
+                }, 5000)
               }
               }>
                 vote

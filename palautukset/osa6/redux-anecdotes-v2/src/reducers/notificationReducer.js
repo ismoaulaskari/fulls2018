@@ -20,14 +20,8 @@ export const notificationSetting = (notification) => {
 
 export const notificationHiding = () => {
   return {
-    type: 'HIDE_NOTIFICATION'    
+    type: 'HIDE_NOTIFICATION'
   }
-}
-
-export const hideInFive = (store) => {
-  setTimeout(() => {
-    store.dispatch(notificationHiding())
-  }, 5000)
 }
 
 export default notificationReducer
