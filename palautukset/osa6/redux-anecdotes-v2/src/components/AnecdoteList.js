@@ -5,22 +5,10 @@ import { notificationHiding, notificationSetting } from '../reducers/notificatio
 
 class AnecdoteList extends React.Component {
   render() {
-    const anecdotesToShow = () => {
-      const { anecdotes, filter } = this.props
-      if (!filter.filter) {
-        return anecdotes
-      }
-
-      return anecdotes.filter((p) => {
-        return (p.content.search(new RegExp(filter.filter, 'i')) > -1)
-      })
-    }
-
-    //const anecdotes = this.props.anecdotes
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotesToShow().sort((a, b) => b.votes - a.votes).map(anecdote =>
+        {this.props.visibleAnecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
           <div key={anecdote.id}>
             <div>
               {anecdote.content}
@@ -45,11 +33,19 @@ class AnecdoteList extends React.Component {
   }
 }
 
+const anecdotesToShow = (anecdotes, filter) => {
+  if (!filter.filter) {
+    return anecdotes
+  }
+
+  return anecdotes.filter((p) => {
+    return (p.content.search(new RegExp(filter.filter, 'i')) > -1)
+  })
+}
 
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes,
-    filter: state.filter
+    visibleAnecdotes: anecdotesToShow(state.anecdotes, state.filter)
   }
 }
 
