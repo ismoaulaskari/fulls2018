@@ -2,14 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { anecdoteCreation } from '../reducers/anecdoteReducer'
 import { notificationSetting, notificationHiding } from '../reducers/notificationReducer'
+import anecdoteService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const content = e.target.anecdote.value
-    this.props.anecdoteCreation(content)
+    const newAnecdote = anecdoteService.createNew(content)
+    this.props.anecdoteCreation(newAnecdote)
     this.props.notificationSetting(`a new anecdote: ${content}`)
-    console.log(this.propsasdas)
     setTimeout(() => {
       this.props.notificationHiding()
     }, 5000)
