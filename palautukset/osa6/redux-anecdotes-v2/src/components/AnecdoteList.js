@@ -17,7 +17,7 @@ class AnecdoteList extends React.Component {
               has {anecdote.votes}
               <button onClick={() => {
                 this.props.voteAdding(anecdote)
-                this.props.notify(`A vote for ${anecdote.content}`)
+                this.props.notify(`A vote for ${anecdote.content}`, 4)
               }
               }>
                 vote

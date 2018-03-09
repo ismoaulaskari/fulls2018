@@ -11,14 +11,14 @@ const notificationReducer = (state = initialState, action) => {
   }
 }
 
-export const notify = (message) => {
+export const notify = (message, seconds) => {
   return async (dispatch) => {
     dispatch(
       notificationSetting(message)
     )
     setTimeout(() => {
       dispatch(notificationHiding())
-    }, 5000)
+    }, seconds * 1000)
 
   }
 }

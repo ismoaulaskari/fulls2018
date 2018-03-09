@@ -8,7 +8,7 @@ class AnecdoteForm extends React.Component {
     e.preventDefault()
     const content = e.target.anecdote.value
     this.props.anecdoteCreation(content)
-    this.props.notify(`a new anecdote: ${content}`)
+    this.props.notify(`a new anecdote: ${content}`, 4)
     e.target.anecdote.value = ''
   }
   render() {
