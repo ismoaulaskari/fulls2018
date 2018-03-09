@@ -20,7 +20,6 @@ const anecdoteReducer = (store = initialState, action) => {
     return [...old, voted]
   }
   if (action.type === 'CREATE') {
-    console.log(action)
     return [...store, {
       content: action.data.content,
       id: action.data.id, votes:
@@ -44,17 +43,24 @@ export const anecdoteInitialization = () => {
   }
 }
 
-export const anecdoteCreation = (data) => {
-  return {
-    type: 'CREATE',
-    data
+export const anecdoteCreation = (content) => {
+  return async (dispatch) => {
+    const data = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'CREATE',
+      data
+    })
   }
 }
 
-export const voteAdding = (data) => {
-  return {
-    type: 'VOTE',
-    data
+export const voteAdding = (anecdote) => {
+  return async (dispatch) => {
+    anecdote.votes++
+    const data = await anecdoteService.updateExisting(anecdote)
+    dispatch({
+      type: 'VOTE',
+      data
+    })
   }
 }
 

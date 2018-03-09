@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { voteAdding } from '../reducers/anecdoteReducer'
 import { notificationHiding, notificationSetting } from '../reducers/notificationReducer'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
   render() {
@@ -17,9 +16,7 @@ class AnecdoteList extends React.Component {
             <div>
               has {anecdote.votes}
               <button onClick={() => {
-                anecdote.votes++
-                const updatedAnecdote = anecdoteService.updateExisting(anecdote)
-                this.props.voteAdding(updatedAnecdote)
+                this.props.voteAdding(anecdote)
                 this.props.notificationSetting(`A vote for ${anecdote.content}`)
                 setTimeout(() => {
                   this.props.notificationHiding()
