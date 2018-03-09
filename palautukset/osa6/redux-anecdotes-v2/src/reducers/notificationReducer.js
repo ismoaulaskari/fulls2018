@@ -11,14 +11,26 @@ const notificationReducer = (state = initialState, action) => {
   }
 }
 
-export const notificationSetting = (notification) => {
+export const notify = (message) => {
+  return async (dispatch) => {
+    dispatch(
+      notificationSetting(message)
+    )
+    setTimeout(() => {
+      dispatch(notificationHiding())
+    }, 5000)
+
+  }
+}
+
+const notificationSetting = (notification) => {
   return {
     type: 'SET_NOTIFICATION',
     text: notification
   }
 }
 
-export const notificationHiding = () => {
+const notificationHiding = () => {
   return {
     type: 'HIDE_NOTIFICATION'
   }
