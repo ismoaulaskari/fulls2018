@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
+
 
 const findAnecdoteById = (anecdotes, id) => {
   return anecdotes.find(a => a.id === id)
@@ -35,9 +37,9 @@ const Menu = ({ anecdotes, addNew, notify, style }) => (
 const AnecdoteList = ({anecdotes}) => (
   <div>
       <h2>Anecdotes</h2>
-      <ul>
-        {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
-      </ul>
+      <ListGroup>
+        {anecdotes.map(anecdote => <ListGroupItem key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></ListGroupItem>)}
+      </ListGroup>
     </div>
     )
     
@@ -210,7 +212,7 @@ notification: ''
     }
 
     return (
-      <div>
+      <div className="container">
       <h1>Software anecdotes</h1>
       {notification()}
       <Menu style={activeStyle} anecdotes={this.state.anecdotes} notify={this.notify}addNew={this.addNew} />      
