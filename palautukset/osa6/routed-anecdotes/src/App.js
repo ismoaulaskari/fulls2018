@@ -12,7 +12,7 @@ const Anecdote = ({anecdote}) => {
   )
 }
 
-const Menu = ({ anecdotes, addNew }) => (
+const Menu = ({ anecdotes, addNew, notify }) => (
   <Router>
     <div>
       <div>
@@ -22,7 +22,7 @@ const Menu = ({ anecdotes, addNew }) => (
     </div>
       <div>
         <Route exact path="/anecdotes" render={() => <AnecdoteList anecdotes={anecdotes} />} />
-        <Route path="/create_new" render={({history}) => <CreateNew addNew={addNew} history={history}/>} />
+        <Route path="/create_new" render={({history}) => <CreateNew addNew={addNew} history={history} notify={notify}/>} />
         <Route path="/about" render={() => <About />} />
         <Route exact path="/" render={() => <AnecdoteList anecdotes={anecdotes} />} />
         <Route exact path="/anecdotes/:id" render={({ match }) =>
@@ -86,6 +86,7 @@ class CreateNew extends React.Component {
     info: this.state.info,
     votes: 0
   })
+  this.props.notify(this.state.content)
   this.props.history.push('/anecdotes')
 }
 
@@ -160,11 +161,19 @@ notification: ''
     this.setState({anecdotes})
   }
 
+  notify = (content) => {
+    this.setState({ notification: `Added new: ${content}` })
+    setTimeout(() => {
+      this.setState({ notification: '' })
+    }, 10 * 1000)
+  }
+
   render() {
     return (
       <div>
       <h1>Software anecdotes</h1>
-      <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} />
+      <p><i>{this.state.notification}</i></p>
+      <Menu anecdotes={this.state.anecdotes} notify={this.notify}addNew={this.addNew} />      
       <Footer />
     </div>
     );
