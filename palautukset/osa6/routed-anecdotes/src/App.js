@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 
 const findAnecdoteById = (anecdotes, id) => {
@@ -44,9 +44,12 @@ const AnecdoteList = ({anecdotes}) => (
     )
     
     const About = () => (
-  <div>
+  <Grid>
       <h2>About anecdote app</h2>
       <p>According to Wikipedia:</p>
+    <Row>
+    <Col  sm={4} md={2}>
+
 
       <em>An anecdote is a brief, revealing account of an individual person or an incident.
         Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
@@ -54,7 +57,12 @@ const AnecdoteList = ({anecdotes}) => (
       An anecdote is "a story with a point."</em>
 
       <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
-    </div>
+    </Col>
+    <Col>
+      <img src="wall3.jpg" alt="famous"/>
+      </Col>
+      </Row>
+    </Grid>
     )
     
     const Footer = () => (
