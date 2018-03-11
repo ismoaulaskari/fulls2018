@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
 
 const findAnecdoteById = (anecdotes, id) => {
   return anecdotes.find(a => a.id === id)
@@ -12,13 +12,13 @@ const Anecdote = ({anecdote}) => {
   )
 }
 
-const Menu = ({ anecdotes, addNew, notify }) => (
+const Menu = ({ anecdotes, addNew, notify, style }) => (
   <Router>
     <div>
       <div>
-        <Link to="/anecdotes">anecdotes</Link>&nbsp;
-      <Link to="/create_new">create new</Link>&nbsp;
-      <Link to="/about">about</Link>&nbsp;
+        <NavLink activeStyle={style} to="/anecdotes">anecdotes</NavLink>&nbsp;
+      <NavLink activeStyle={style} to="/create_new">create new</NavLink>&nbsp;
+      <NavLink activeStyle={style} to="/about">about</NavLink>&nbsp;
     </div>
       <div>
         <Route exact path="/anecdotes" render={() => <AnecdoteList anecdotes={anecdotes} />} />
@@ -169,19 +169,19 @@ notification: ''
   }
 
   render() {
-    const otherStyle = {
+    /*const otherStyle = {
       color: 'green',
       fontStyle: 'italic',
       fontSize: 16,
-      //border: 4,
-      //outlineStyle: 'inset',
+      border: 4,
+      outlineStyle: 'inset',
       outlineColor: 'green',
       borderRadius: 25,
       borderWidth: 1,
       borderColor: '#fff',
-      //margin: 4,
-      //padding: 4
-    }
+      margin: 4,
+      padding: 4
+    }*/
 
     const notifyStyle = {
       marginRight:10,
@@ -194,6 +194,11 @@ notification: ''
       borderWidth: 1,
       borderColor: '#fff'
     }
+
+    const activeStyle={
+      fontWeight: 'bold',
+      color: 'red'
+     }
 
     const notification = () => {
       return (
@@ -208,7 +213,7 @@ notification: ''
       <div>
       <h1>Software anecdotes</h1>
       {notification()}
-      <Menu anecdotes={this.state.anecdotes} notify={this.notify}addNew={this.addNew} />      
+      <Menu style={activeStyle} anecdotes={this.state.anecdotes} notify={this.notify}addNew={this.addNew} />      
       <Footer />
     </div>
     );
