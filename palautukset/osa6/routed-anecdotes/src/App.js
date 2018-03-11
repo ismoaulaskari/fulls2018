@@ -22,7 +22,7 @@ const Menu = ({ anecdotes, addNew }) => (
     </div>
       <div>
         <Route exact path="/anecdotes" render={() => <AnecdoteList anecdotes={anecdotes} />} />
-        <Route path="/create_new" render={() => <CreateNew addNew={addNew} />} />
+        <Route path="/create_new" render={({history}) => <CreateNew addNew={addNew} history={history}/>} />
         <Route path="/about" render={() => <About />} />
         <Route exact path="/" render={() => <AnecdoteList anecdotes={anecdotes} />} />
         <Route exact path="/anecdotes/:id" render={({ match }) =>
@@ -74,7 +74,7 @@ class CreateNew extends React.Component {
 }
 
   handleChange = (e) => {
-      console.log(e.target.name, e.target.value)
+      //console.log(e.target.name, e.target.value)
     this.setState({[e.target.name]: e.target.value })
   }
 
@@ -86,6 +86,7 @@ class CreateNew extends React.Component {
     info: this.state.info,
     votes: 0
   })
+  this.props.history.push('/anecdotes')
 }
 
   render() {
