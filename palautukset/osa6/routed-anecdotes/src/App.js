@@ -169,10 +169,45 @@ notification: ''
   }
 
   render() {
+    const otherStyle = {
+      color: 'green',
+      fontStyle: 'italic',
+      fontSize: 16,
+      //border: 4,
+      //outlineStyle: 'inset',
+      outlineColor: 'green',
+      borderRadius: 25,
+      borderWidth: 1,
+      borderColor: '#fff',
+      //margin: 4,
+      //padding: 4
+    }
+
+    const notifyStyle = {
+      marginRight:10,
+      marginLeft:10,
+      marginTop:10,
+      paddingTop:10,
+      paddingBottom:20,
+      backgroundColor:'#68a0cf',
+      borderRadius:10,
+      borderWidth: 1,
+      borderColor: '#fff'
+    }
+
+    const notification = () => {
+      return (
+      (this.state.notification) ?
+        <div style={notifyStyle}>{this.state.notification}</div> :
+        <p>{this.state.notification}</p>
+      )
+  
+    }
+
     return (
       <div>
       <h1>Software anecdotes</h1>
-      <p><i>{this.state.notification}</i></p>
+      {notification()}
       <Menu anecdotes={this.state.anecdotes} notify={this.notify}addNew={this.addNew} />      
       <Footer />
     </div>
